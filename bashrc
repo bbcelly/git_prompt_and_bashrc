@@ -135,6 +135,10 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 ##	export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/
 ##	export ANDROID_STUDIO_JDK="$STUDIO_JDK"
 
+	export ANDROID_HOME=$HOME/Library/Android/sdk
+	export PATH=$PATH:$ANDROID_HOME/emulator
+	export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 	# Appengine Java SDK
 	APPENGINE_SDK_VERSION=1.9.31
 	export PATH=/Users/celly/.m2/repository/com/google/appengine/appengine-java-sdk/$APPENGINE_SDK_VERSION/appengine-java-sdk/appengine-java-sdk-$APPENGINE_SDK_VERSION/bin:$PATH
