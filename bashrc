@@ -97,6 +97,8 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 
 	export PATH="$GEM_HOME/bin:$GEM_HOME/ruby/2.6.0/bin:$PATH"
 	export PATH="/usr/pkg/bin:/usr/pkg/sbin:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH"
+	# unversioned `python`/`pip` from Homebrew python (it only ships python3 in bin)
+	export PATH="$BREW_PREFIX/opt/python@3.14/libexec/bin:$PATH"
 	export MANPATH="/usr/pkg/man:$BREW_PREFIX/share/man:$MANPATH"
 	#export C_INCLUDE_PATH=$BREW_PREFIX/include:$C_INCLUDE_PATH
 	export LIBPATH=$BREW_PREFIX/
