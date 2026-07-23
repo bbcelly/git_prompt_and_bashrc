@@ -117,11 +117,18 @@ if [[ "$PLATFORM" == 'osx' ]]; then
 		. $BREW_PREFIX/etc/bash_completion
 	fi
 
-	# NVM
+	# NVM (lazy-loaded: real nvm loads on first nvm/node/npm/npx use, keeping new shells fast)
 	export NVM_DIR=${MAIN_HOME}/.nvm
-	[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && . "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
-	[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-	nvm use node
+	_load_nvm() {
+		unset -f nvm node npm npx 2>/dev/null
+		[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ] && . "$BREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
+		[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && . "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # nvm bash_completion
+		nvm use node >/dev/null 2>&1
+	}
+	nvm()  { _load_nvm; nvm "$@"; }
+	node() { _load_nvm; node "$@"; }
+	npm()  { _load_nvm; npm "$@"; }
+	npx()  { _load_nvm; npx "$@"; }
 
 	# JAVA_HOME
 	export JAVA_8_HOME=$(/usr/libexec/java_home -v1.8)
