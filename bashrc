@@ -191,3 +191,12 @@ fi
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+# cmux shell integration (report cwd so new tabs inherit the current directory).
+# Must load AFTER PROMPT_COMMAND is set above, so Ghostty appends its hook
+# instead of being clobbered by create_prompt.
+if [[ -n "$CMUX_SHELL_INTEGRATION_DIR" && -z "$_CMUX_BASH_INTEGRATION_LOADED" ]]; then
+	[[ -r "$CMUX_SHELL_INTEGRATION_DIR/ghostty-integration.bash" ]] && source "$CMUX_SHELL_INTEGRATION_DIR/ghostty-integration.bash"
+	[[ -r "$CMUX_SHELL_INTEGRATION_DIR/cmux-bash-integration.bash" ]] && source "$CMUX_SHELL_INTEGRATION_DIR/cmux-bash-integration.bash"
+	export _CMUX_BASH_INTEGRATION_LOADED=1
+fi
